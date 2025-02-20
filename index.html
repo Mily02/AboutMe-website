@@ -3,214 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            scroll-behavior: smooth; /* Smooth scrolling effect */
-            margin: 0;
-            padding: 0;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: #333;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        section {
-            height: 100vh; /* Full screen height for each section */
-            padding: 50px;
-            text-align: center;
-        }
-        #home { background: lightblue; }
-        #about { background: lightgreen; }
-        #portfolio { background: lightgoldenrodyellow; }
-        #contact { background: lightcoral; }
-        
-        /* Portfolio Styling */
-        .portfolio-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding-top: 20px;
-        }
-        .portfolio-item {
-            width: 300px;
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .portfolio-item img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .portfolio-item h3 {
-            margin: 10px 0;
-        }
-        .portfolio-item a {
-            display: inline-block;
-            padding: 5px 10px;
-            background: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
+    <title>My Portfolio</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100">
+    <!-- Root element where React will load -->
+    <div id="root"></div>
 
-    <!-- Navigation Menu -->
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#contact">Contact</a>
-    </nav>
+    <script type="text/babel">
+        function PortfolioWebsite() {
+            const [activeSection, setActiveSection] = React.useState("home");
 
-    <!-- Sections -->
-    <section id="home">
-        <h1>Welcome to My Website</h1>
-        <p>This is the home section.</p>
-    </section>
+            return (
+                <div className="min-h-screen text-gray-900">
+                    <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg flex justify-center space-x-6">
+                        {["home", "about", "portfolio", "contact"].map((section) => (
+                            <button
+                                key={section}
+                                onClick={() => setActiveSection(section)}
+                                className={`px-4 py-2 transition-all duration-300 rounded-md ${
+                                    activeSection === section ? "bg-blue-500" : "hover:bg-gray-700"
+                                }`}
+                            >
+                                {section.charAt(0).toUpperCase() + section.slice(1)}
+                            </button>
+                        ))}
+                    </nav>
 
-    <section id="about">
-        <h1>About Me</h1>
-        <p>This is the about section.</p>
-    </section>
+                    <div className="pt-20 text-center">
+                        {activeSection === "home" && <h1 className="p-10 text-3xl font-bold">Welcome to My Website</h1>}
+                        {activeSection === "about" && <h1 className="p-10 text-3xl font-bold">About Me</h1>}
+                        {activeSection === "portfolio" && (
+                            <div className="p-10">
+                                <h1 className="text-3xl font-bold">My Portfolio</h1>
+                                <div className="flex flex-wrap justify-center gap-6 mt-6">
+                                    {[1, 2, 3].map((num) => (
+                                        <div key={num} className="w-80 bg-white shadow-lg rounded-lg p-4">
+                                            <img src={`https://via.placeholder.com/300`} alt={`Project ${num}`} className="rounded-lg" />
+                                            <h3 className="mt-3 text-xl font-semibold">Project {num}</h3>
+                                            <p className="text-gray-600">A description of Project {num}.</p>
+                                            <a href="#" className="inline-block mt-3 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">View Project</a>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        {activeSection === "contact" && <h1 className="p-10 text-3xl font-bold">Contact Me</h1>}
+                    </div>
+                </div>
+            );
+        }
 
-    <section id="portfolio">
-        <h1>My Portfolio</h1>
-        <div class="portfolio-container">
-            <div class="portfolio-item">
-                <img src="https://via.placeholder.com/300" alt="Project 1">
-                <h3>Project 1</h3>
-                <p>A description of Project 1.</p>
-                <a href="#" target="_blank">View Project</a>
-            </div>
-            <div class="portfolio-item">
-                <img src="https://via.placeholder.com/300" alt="Project 2">
-                <h3>Project 2</h3>
-                <p>A description of Project 2.</p>
-                <a href="#" target="_blank">View Project</a>
-            </div>
-            <div class="portfolio-item">
-                <img src="https://via.placeholder.com/300" alt="Project 3">
-                <h3>Project 3</h3>
-                <p>A description of Project 3.</p>
-                <a href="#" target="_blank">View Project</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h1>Contact</h1>
-        <ul>
-            <li><a href="mailto:your-email@example.com">Email</a></li>
-            <li><a href="tel:+1234567890">Phone</a></li>
-            <li><a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn</a></li>
-        </ul>
-    </section>
-
+        ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
+    </script>
 </body>
 </html>
-import { useState } from "react";
-
-export default function PortfolioWebsite() {
-  const [activeSection, setActiveSection] = useState("home");
-
-  return (
-    <div className="min-h-screen bg-gray-100 text-gray-900">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg">
-        <div className="flex justify-center space-x-6">
-          {[
-            { id: "home", label: "Home" },
-            { id: "about", label: "About" },
-            { id: "portfolio", label: "Portfolio" },
-            { id: "contact", label: "Contact" },
-          ].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={`px-4 py-2 transition-all duration-300 rounded-md ${
-                activeSection === item.id ? "bg-blue-500" : "hover:bg-gray-700"
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </nav>
-
-      {/* Sections */}
-      <div className="pt-20 text-center">
-        {activeSection === "home" && (
-          <div className="p-10 text-3xl font-bold">Welcome to My Website</div>
-        )}
-
-        {activeSection === "about" && (
-          <div className="p-10 animate-fadeIn">
-            <h1 className="text-3xl font-bold">About Me</h1>
-            <p className="mt-4">This is the about section.</p>
-          </div>
-        )}
-
-        {activeSection === "portfolio" && (
-          <div className="p-10 animate-fadeIn">
-            <h1 className="text-3xl font-bold">My Portfolio</h1>
-            <div className="flex flex-wrap justify-center gap-6 mt-6">
-              {[1, 2, 3].map((num) => (
-                <div
-                  key={num}
-                  className="w-80 bg-white shadow-lg rounded-lg p-4"
-                >
-                  <img
-                    src={`https://via.placeholder.com/300`}
-                    alt={`Project ${num}`}
-                    className="rounded-lg"
-                  />
-                  <h3 className="mt-3 text-xl font-semibold">Project {num}</h3>
-                  <p className="text-gray-600">A description of Project {num}.</p>
-                  <a
-                    href="#"
-                    className="inline-block mt-3 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                  >
-                    View Project
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {activeSection === "contact" && (
-          <div className="p-10 animate-fadeIn">
-            <h1 className="text-3xl font-bold">Contact Me</h1>
-            <ul className="mt-4 space-y-3">
-              <li>
-                <a href="mailto:your-email@example.com" className="text-blue-500">Email Me</a>
-              </li>
-              <li>
-                <a href="tel:+1234567890" className="text-blue-500">Call Me</a>
-              </li>
-              <li>
-                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" className="text-blue-500">LinkedIn</a>
-              </li>
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
