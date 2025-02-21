@@ -8,11 +8,32 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
 </head>
 <body class="bg-gray-100">
     <div id="root"></div> <!-- React will render inside this div -->
 
     <script type="text/babel">
+        useEffect(() => {
+    new Swiper(".mySwiper", {
+        loop: true,
+        autoplay: {
+            delay: 3000, // Slides change every 3 seconds
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+}, []);
         // ✅ Import useState properly
         const { useState } = React;
 
@@ -72,18 +93,40 @@ I look forward to bringing my dedication, enthusiasm, and customer-first mindset
                             </div>
                         )}
 
-                        {activeSection === "about" && (
-                            <div className="p-10 animate-fadeIn">
-                                <h1 className="text-3xl font-bold">About Me</h1>
-                                <p className="mt-4 text-lg text-gray-600">
+                        {activeSection === "about me" && (
+                            <div className="p-10 max-w-3xl mx-auto text-justify leading-relaxed">
+                                <h1 className="text-3xl font-bold text-center">About Me</h1>
+                                <p className="mt-6">
                                     Hi, I'm [Your Name], a passionate web developer. I love creating
                                     beautiful, functional websites.
                                 </p>
-                                <img
-                                    src="https://via.placeholder.com/400"
-                                    alt="Profile"
-                                    className="mt-6 mx-auto rounded-lg shadow-lg"
-                                />
+
+        {/* Image Slider */}
+        <div className="mt-6">
+            <div className="swiper mySwiper">
+                <div className="swiper-wrapper">
+                    <div className="swiper-slide">
+                        <img src="image1.jpg" alt="Image 1" className="rounded-lg shadow-lg w-full h-64 object-cover" />
+                    </div>
+                    <div className="swiper-slide">
+                        <img src="image2.jpg" alt="Image 2" className="rounded-lg shadow-lg w-full h-64 object-cover" />
+                    </div>
+                    <div className="swiper-slide">
+                        <img src="image3.jpg" alt="Image 3" className="rounded-lg shadow-lg w-full h-64 object-cover" />
+                    </div>
+                </div>
+
+                {/* Navigation Arrows */}
+                <div className="swiper-button-next"></div>
+                <div className="swiper-button-prev"></div>
+                <div className="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <p className="mt-6">
+            I thrive in fast-paced environments, especially during peak seasons like summer holidays and Valentine’s Day, where attention to detail and efficiency are essential. 
+            My approach to service is centered on professionalism, warmth, and a genuine desire to create positive experiences.
+        </p>
                             </div>
                         )}
 
@@ -133,6 +176,7 @@ I’m ready to bring professionalism, adaptability, and a customer-first mindset
         // ✅ Render the React Component into the "root" div
         ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <footer class="text-center py-4 text-gray-700">
         &copy; 2025 Emily Bonnet. All rights reserved.
