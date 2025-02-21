@@ -12,30 +12,63 @@
 <body class="bg-gray-100">
     <!-- Root element where React will load -->
     <div id="root"></div>
+    import { useState } from "react";
 
     <script type="text/babel">
-        function PortfolioWebsite() {
-            const [activeSection, setActiveSection] = React.useState("home");
+        export default function PortfolioWebsite() {
+            const [activeSection, setActiveSection] = useState("home");
 
             return (
-                <div className="min-h-screen text-gray-900">
-                    <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg flex justify-center space-x-6">
-                        {["home", "about me", "portfolio", "contact"].map((section) => (
-                            <button
-                                key={section}
-                                onClick={() => setActiveSection(section)}
+                <div className="min-h-screen bg-gray-100 text-gray-900">
+                  {/* Navigation Bar */}
+                    <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg">
+                         <div className="flex justify-center space-x-6">
+                           {[
+                             { id: "home", label: "Home" },
+                             { id: "about me", label: "About me" },
+                             { id: "portfolio", label: "Portfolio" },
+                             { id: "contact", label: "Contact" },
+                            ].map((item) => (
+                              <button
+                                key={item.id}
+                                onClick={() => setActiveSection(item.id)}
                                 className={`px-4 py-2 transition-all duration-300 rounded-md ${
-                                    activeSection === section ? "bg-red-700" : "hover:bg-gray-700"
+                                    activeSection === item.id ? "bg-red-500" : "hover:bg-gray-700"
                                 }`}
                             >
-                                {section.charAt(0).toUpperCase() + section.slice(1)}
+                                {item.label}
                             </button>
                         ))}
+                         </div>
                     </nav>
 
+                    {/* Sections */}
                     <div className="pt-20 text-center">
-                        {activeSection === "home" && <h1 className="p-10 text-3xl font-bold">Welcome to My Website</h1>}
-                        {activeSection === "about me" && <h1 className="p-10 text-3xl font-bold">About Me</h1>}
+                        {activeSection === "home" && (
+                             <div className="p-10">
+                                <h1 className="text-3xl font-bold">Welcome to My Website</h1>
+                                <p className="mt-4 text-lg text-gray-600">
+                                  This is a modern portfolio site built with React and Tailwind CSS.
+                                </p>
+                              </div>
+                            )}
+                        
+                        {activeSection === "about me" && (
+                          <div className="p-10 animate-fadeIn">
+                            <h1 className="text-3xl font-bold">About Me</h1>
+                            <p className="mt-4 text-lg text-gray-600">
+                              Hi, I'm [Your Name], a passionate web developer. I love creating
+                              beautiful, functional websites.
+                            </p>
+                            <img
+                              src="https://via.placeholder.com/400"
+                              alt="Profile"
+                              className="mt-6 mx-auto rounded-lg shadow-lg"
+                            />
+                          </div>
+                        )}
+
+        
                         {activeSection === "portfolio" && (
                             <div className="p-10">
                                 <h1 className="text-3xl font-bold">My Portfolio</h1>
@@ -51,11 +84,43 @@
                                 </div>
                             </div>
                         )}
-                        {activeSection === "contact" && <h1 className="p-10 text-3xl font-bold">Contact Me</h1>}
+                        {activeSection === "contact" && (
+          <div className="p-10 animate-fadeIn">
+            <h1 className="text-3xl font-bold">Contact Me</h1>
+            <p className="mt-4 text-lg text-gray-600">
+              Let's connect! Reach out via email, phone, or LinkedIn.
+            </p>
+            <ul className="mt-6 space-y-3 text-lg">
+              <li>
+                📧{" "}
+                <a href="mailto:your-email@example.com" className="text-red-500">
+                  your-email@example.com
+                </a>
+              </li>
+              <li>
+                📞{" "}
+                <a href="tel:+1234567890" className="text-red-500">
+                  +1234567890
+                </a>
+              </li>
+              <li>
+                💼{" "}
+                <a
+                  href="https://www.linkedin.com/in/yourprofile"
+                  target="_blank"
+                  className="text-red-500"
+                >
+                  LinkedIn Profile
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
                     </div>
                 </div>
                
             );
+        }
         }
 
         ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
