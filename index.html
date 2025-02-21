@@ -4,45 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
+
+    <!-- ✅ React & Babel -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- ✅ Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+
+    <!-- ✅ Swiper.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body class="bg-gray-100">
     <div id="root"></div> <!-- React will render inside this div -->
 
     <script type="text/babel">
-        useEffect(() => {
-    new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: {
-            delay: 3000, // Slides change every 3 seconds
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-    });
-}, []);
-        // ✅ Import useState properly
-        const { useState } = React;
+        const { useState, useEffect } = React;
 
         function PortfolioWebsite() {
             const [activeSection, setActiveSection] = useState("home");
 
+            // ✅ Initialize Swiper inside useEffect, only when About Me section is active
+            useEffect(() => {
+                if (activeSection === "about-me") {
+                    new Swiper(".mySwiper", {
+                        loop: true,
+                        autoplay: {
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        },
+                        pagination: {
+                            el: ".swiper-pagination",
+                            clickable: true,
+                        },
+                        navigation: {
+                            nextEl: ".swiper-button-next",
+                            prevEl: ".swiper-button-prev",
+                        },
+                    });
+                }
+            }, [activeSection]); // Runs when `activeSection` changes
+
             return (
                 <div className="min-h-screen bg-gray-100 text-gray-900">
-                    {/* Navigation Bar */}
+                    {/* ✅ Navigation Bar */}
                     <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg">
                         <div className="flex justify-center space-x-6">
                             {[
@@ -64,107 +70,68 @@
                         </div>
                     </nav>
 
-                    {/* Sections */}
+                    {/* ✅ Sections */}
                     <div className="pt-20 text-center">
+                        {/* ✅ Home Section */}
                         {activeSection === "home" && (
-                            <div className="p-10  text-lg text-gray-600">
-                                 {/* Image Section */} <div className="flex justify-center mt-6">
-            <img 
-                src="Photo emirates CV.jpg" 
-                alt="Emily Bonnet" 
-                className="w-48 h-48 object-cover rounded-full shadow-lg"
-            />
-        </div>
+                            <div className="p-10 text-lg text-gray-600">
+                                {/* Profile Image */}
+                                <div className="flex justify-center mt-6">
+                                    <img 
+                                        src="Photo emirates CV.jpg" 
+                                        alt="Emily Bonnet" 
+                                        className="w-48 h-48 object-cover rounded-full shadow-lg"
+                                    />
+                                </div>
 
-        {/* Text Section */}
-                                <h1 className="text-3xl font-bold text-center">Hello, I'm Emily</h1>
-                                <p className="mt-6">
-                                    With over a year of experience in the hospitality industry, I have developed a deep passion for delivering outstanding customer service. Working with both local and international guests has enhanced my ability to communicate effectively, adapt to diverse cultures, and ensure every client feels valued.
-        </p>
-        <p className="mt-4">
-I thrive in fast-paced environments, especially during peak seasons like summer holidays and Valentine’s Day, where attention to detail and efficiency are essential. My approach to service is centered on professionalism, warmth, and a genuine desire to create positive experiences—whether it’s taking orders, handling inquiries, or resolving customer concerns with care and patience.
-        </p>
-        <p className="mt-4">
-I am always seeking opportunities to grow, refine my skills, and exceed expectations. Adaptability, teamwork, and a commitment to excellence are qualities I embrace in every role. Outside of work, I prioritize self-care to stay energized and maintain a positive mindset, ensuring that I am always ready to take on new challenges.
-        </p>
-        <p className="mt-4">
-I look forward to bringing my dedication, enthusiasm, and customer-first mindset to new opportunities in the aviation industry.
-                                </p>
+                                <h1 className="text-3xl font-bold text-center mt-4">Hello, I'm Emily</h1>
+
+                                <p className="mt-6">With over a year of experience in the hospitality industry...</p>
+                                <p className="mt-4">I thrive in fast-paced environments, especially during peak seasons...</p>
+                                <p className="mt-4">I am always seeking opportunities to grow and refine my skills...</p>
+                                <p className="mt-4">I look forward to bringing my dedication and enthusiasm...</p>
                             </div>
                         )}
 
-                        {activeSection === "about me" && (
+                        {/* ✅ About Me Section */}
+                        {activeSection === "about-me" && (
                             <div className="p-10 max-w-3xl mx-auto text-justify leading-relaxed">
                                 <h1 className="text-3xl font-bold text-center">About Me</h1>
-                                <p className="mt-6">
-                                    Hi, I'm [Your Name], a passionate web developer. I love creating
-                                    beautiful, functional websites.
-                                </p>
+                                <p className="mt-6">I thrive in fast-paced environments...</p>
 
-        {/* Image Slider */}
-        <div className="mt-6">
-            <div className="swiper mySwiper">
-                <div className="swiper-wrapper">
-                    <div className="swiper-slide">
-                        <img src="image1.jpg" alt="Image 1" className="rounded-lg shadow-lg w-full h-64 object-cover" />
-                    </div>
-                    <div className="swiper-slide">
-                        <img src="image2.jpg" alt="Image 2" className="rounded-lg shadow-lg w-full h-64 object-cover" />
-                    </div>
-                    <div className="swiper-slide">
-                        <img src="image3.jpg" alt="Image 3" className="rounded-lg shadow-lg w-full h-64 object-cover" />
-                    </div>
-                </div>
-
-                {/* Navigation Arrows */}
-                <div className="swiper-button-next"></div>
-                <div className="swiper-button-prev"></div>
-                <div className="swiper-pagination"></div>
-            </div>
-        </div>
-
-        <p className="mt-6">
-            I thrive in fast-paced environments, especially during peak seasons like summer holidays and Valentine’s Day, where attention to detail and efficiency are essential. 
-            My approach to service is centered on professionalism, warmth, and a genuine desire to create positive experiences.
-        </p>
-                            </div>
-                        )}
-
-                        {activeSection === "portfolio" && (
-                            <div className="p-10 animate-fadeIn">
-                                <h1 className="text-3xl font-bold">My Portfolio</h1>
-                                <div className="flex flex-wrap justify-center gap-6 mt-6">
-                                    {[1, 2, 3].map((num) => (
-                                        <div key={num} className="w-80 bg-white shadow-lg rounded-lg p-4">
-                                            <img src={`https://via.placeholder.com/300`} alt={`Project ${num}`} className="rounded-lg" />
-                                            <h3 className="mt-3 text-xl font-semibold">Project {num}</h3>
-                                            <p className="text-gray-600">A description of Project {num}.</p>
-                                            <a href="#" className="inline-block mt-3 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">View Project</a>
+                                {/* ✅ Swiper Image Slider */}
+                                <div className="mt-6">
+                                    <div className="swiper mySwiper">
+                                        <div className="swiper-wrapper">
+                                            <div className="swiper-slide">
+                                                <img src="image1.jpg" alt="Image 1" className="rounded-lg shadow-lg w-full h-64 object-cover" />
+                                            </div>
+                                            <div className="swiper-slide">
+                                                <img src="image2.jpg" alt="Image 2" className="rounded-lg shadow-lg w-full h-64 object-cover" />
+                                            </div>
+                                            <div className="swiper-slide">
+                                                <img src="image3.jpg" alt="Image 3" className="rounded-lg shadow-lg w-full h-64 object-cover" />
+                                            </div>
                                         </div>
-                                    ))}
+
+                                        {/* Navigation */}
+                                        <div className="swiper-button-next"></div>
+                                        <div className="swiper-button-prev"></div>
+                                        <div className="swiper-pagination"></div>
+                                    </div>
                                 </div>
                             </div>
                         )}
 
+                        {/* ✅ Contact Section */}
                         {activeSection === "contact" && (
                             <div className="p-10 animate-fadeIn">
                                 <h1 className="text-3xl font-bold">Contact Me</h1>
-                                <p className="mt-4 text-lg text-gray-600">
-                                    "Let’s Take Service to New Heights! ✈️"
-</p>
-<p className="mt-4">                                    
-I’m ready to bring professionalism, adaptability, and a customer-first mindset to your team. Let’s connect and make a difference together!
-                                </p>
+                                <p className="mt-4">Let’s Take Service to New Heights! ✈️</p>
                                 <ul className="mt-6 space-y-3 text-lg">
-                                    <li>
-                                        📞 <a href="tel:+33 7 88 50 57 84" className="text-yellow-500 hover:underline">+33 7 88 50 57 84</a>
-                                    </li>
-                                    <li>
-                                        📧 <a href="mailto:emily.bonnet2003@]gmail.com" className="text-yellow-500 hover:underline">emily.bonnet2003@gmail.com</a>
-                                    </li>
-                                    <li>
-                                        💼 <a href="linkedin.com/in/emily-bonnet-41829b331" target="_blank" className="text-yellow-500 hover:underline">LinkedIn Profile : emily-bonnet</a>
-                                    </li>
+                                    <li>📞 <a href="tel:+33 7 88 50 57 84" className="text-yellow-500 hover:underline">+33 7 88 50 57 84</a></li>
+                                    <li>📧 <a href="mailto:emily.bonnet2003@gmail.com" className="text-yellow-500 hover:underline">emily.bonnet2003@gmail.com</a></li>
+                                    <li>💼 <a href="https://linkedin.com/in/emily-bonnet-41829b331" target="_blank" className="text-yellow-500 hover:underline">LinkedIn Profile</a></li>
                                 </ul>
                             </div>
                         )}
@@ -173,9 +140,11 @@ I’m ready to bring professionalism, adaptability, and a customer-first mindset
             );
         }
 
-        // ✅ Render the React Component into the "root" div
+        // ✅ Render the React Component
         ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
     </script>
+
+    <!-- ✅ Swiper.js Script (after the React component) -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <footer class="text-center py-4 text-gray-700">
