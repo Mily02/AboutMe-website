@@ -28,7 +28,7 @@
             // ✅ Initialize Swiper inside useEffect, only when About Me section is active
             useEffect(() => {
                 if (activeSection === "about-me") {
-                    new Swiper(".mySwiper", {
+                    const swiper = new Swiper(".mySwiper", {
                         loop: true,
                         autoplay: {
                             delay: 6000, // 🕰️ Slower transition (6 second)
@@ -43,6 +43,21 @@
                             nextEl: ".swiper-button-next",
                             prevEl: ".swiper-button-prev",
                         },
+                        on: {
+                            slideChange: function () {
+                    // Get the active slide
+                                const activeSlide = document.querySelector(".swiper-slide-active");
+
+                    // Find the video inside the active slide
+                                const video = activeSlide.querySelector("video");
+
+                    // Restart video if it exists
+                                if (video) {
+                                    video.currentTime = 0;
+                                    video.play();
+                                }
+                            }
+                        }
                     });
                 }
             }, [activeSection]); // Runs when `activeSection` changes
