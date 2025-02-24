@@ -22,178 +22,141 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        function PortfolioWebsite() {
-            const [activeSection, setActiveSection] = useState("home");
+function PortfolioWebsite() {
+    const [activeSection, setActiveSection] = useState("home");
 
-            // ✅ Initialize Swiper inside useEffect, only when About Me section is active
-            useEffect(() => {
-                if (activeSection === "about-me") {
-                    const swiper = new Swiper(".mySwiper", {
-                        loop: true,
-                        autoplay: {
-                            delay: 6000, // 🕰️ Slower transition (6 second)
-                            disableOnInteraction: false,
-                        },
-                        speed: 1000, // 🕰️ Slower transition animation (1 second)
-                        pagination: {
-                            el: ".swiper-pagination",
-                            clickable: true,
-                        },
-                        navigation: {
-                            nextEl: ".swiper-button-next",
-                            prevEl: ".swiper-button-prev",
-                        },
-                        on: {
-                            slideChange: function () {
-                    // Get the active slide
-                                const activeSlide = document.querySelector(".swiper-slide-active");
-
-                    // Find the video inside the active slide
-                                const video = activeSlide.querySelector("video");
-
-                    // Restart video if it exists
-                                if (video) {
-                                    video.currentTime = 0;
-                                    video.play();
-                                }
-                            }
-                        }
-                    });
+    useEffect(() => {
+        if (activeSection === "about-me") {
+            const swiper = new Swiper(".mySwiper", {
+                loop: true,
+                autoplay: { delay: 6000, disableOnInteraction: false },
+                speed: 1000,
+                pagination: { el: ".swiper-pagination", clickable: true },
+                navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                on: {
+                    slideChange: function () {
+                        const activeSlide = document.querySelector(".swiper-slide-active");
+                        const video = activeSlide?.querySelector("video");
+                        if (video) { video.currentTime = 0; video.play(); }
+                    }
                 }
-            }, [activeSection]); // Runs when `activeSection` changes
+            });
+        }
+    }, [activeSection]);
 
-            return (
-                <div className="min-h-screen bg-gray-100 text-gray-900">
-                    {/* ✅ Navigation Bar */}
-                    <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg">
-                        <div className="flex justify-center space-x-6">
-                            {[
-                                { id: "home", label: "Home" },
-                                { id: "about-me", label: "About Me" },
-                                { id: "portfolio", label: "Portfolio" },
-                                { id: "contact", label: "Contact" },
-                            ].map((item) => (
-                                <button
-                                    key={item.id}
-                                    onClick={() => setActiveSection(item.id)}
-                                    className={`px-4 py-2 transition-all duration-300 rounded-md ${
-                                        activeSection === item.id ? "bg-red-700" : "hover:bg-gray-700"
-                                    }`}
-                                >
-                                    {item.label}
-                                </button>
-                            ))}
+    return (
+        <div className="min-h-screen bg-gray-100 text-gray-900">
+            {/* ✅ Navigation Bar */}
+            <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg">
+                <div className="flex justify-center space-x-6">
+                    {[
+                        { id: "home", label: "Home" },
+                        { id: "about-me", label: "About Me" },
+                        { id: "contact", label: "Contact" },
+                    ].map((item) => (
+                        <button
+                            key={item.id}
+                            onClick={() => setActiveSection(item.id)}
+                            className={`px-4 py-2 transition-all duration-300 rounded-md ${
+                                activeSection === item.id ? "bg-red-700" : "hover:bg-gray-700"
+                            }`}
+                        >
+                            {item.label}
+                        </button>
+                    ))}
+                </div>
+            </nav>
+
+            {/* ✅ Sections */}
+            <div className="pt-20 text-center">
+                {/* ✅ Home Section */}
+                {activeSection === "home" && (
+                    <div className="p-10 text-lg text-gray-600">
+                        <div className="flex justify-center mt-6">
+                            <img src="Photo emirates CV.jpg" alt="Emily Bonnet" className="w-48 h-48 object-cover rounded-full shadow-lg" />
                         </div>
-                    </nav>
+                        <h1 className="text-3xl font-bold text-center mt-4">Hello, I'm Emily</h1>
+                        <p className="mt-6">With over a year of experience in the hospitality industry...</p>
+                    </div>
+                )}
 
-                    {/* ✅ Sections */}
-                    <div className="pt-20 text-center">
-                        {/* ✅ Home Section */}
-                        {activeSection === "home" && (
-                            <div className="p-10 text-lg text-gray-600">
-                                {/* Profile Image */}
-                                <div className="flex justify-center mt-6">
-                                    <img 
-                                        src="Photo emirates CV.jpg" 
-                                        alt="Emily Bonnet" 
-                                        className="w-48 h-48 object-cover rounded-full shadow-lg"
-                                    />
-                                </div>
-
-                                <h1 className="text-3xl font-bold text-center mt-4">Hello, I'm Emily</h1>
-
-                                <p className="mt-6">With over a year of experience in the hospitality industry,</p>
-                                <p className="mt-4">I thrive in fast-paced environments, especially during peak seasons.</p>
-                                <p className="mt-4">I am always seeking opportunities to grow and refine my skills.</p>
-                                <p className="mt-4">I look forward to bringing my dedication and enthusiasm.</p>
-                            </div>
-                        )}
-
-                        {/* ✅ About Me Section */}
-                        {activeSection === "about-me" && (
-                            <div className="p-10 max-w-3xl mx-auto text-justify leading-relaxed">
-                                <h1 className="text-3xl font-bold text-center">About Me</h1>
-                                <p className="mt-6">I have travelled and lived far for some months from my friends and family, lived overseas and my education permited me to developpe somes skills and complet projets in a team.</p>
-
-                                {/* ✅ Swiper Image Slider */}
-                                <div className="mt-6">
-                                    <div className="swiper mySwiper">
-                                        <div className="swiper-wrapper">
-                                         <div className="swiper-slide">
-                                            <video 
-                                                autoPlay 
-                                                muted 
-                                                loop 
-                                                playsInline 
-                                                className="rounded-lg shadow-lg w-full h-[400px] object-cover"
-                                              >
-                                                <source src="For Slide Education(Video).mp4" type="video/mp4" />
-                                            </video>
-                                        </div>
-                                            
-                                            <div className="swiper-slide">
-                                                <img src="image2.jpg" alt="Image 2" className="rounded-lg shadow-lg w-full h-64 object-cover" />
-                                            </div>
-                                            <div className="swiper-slide">
-                                                <img src="image3.jpg" alt="Image 3" className="rounded-lg shadow-lg w-full h-64 object-cover" />
-                                            </div>
-                                        </div>
-
-                                        {/* Navigation */}
-                                        <div className="swiper-button-next"></div>
-                                        <div className="swiper-button-prev"></div>
-                                        <div className="swiper-pagination"></div>
+                {/* ✅ About Me Section (Fixed) */}
+                {activeSection === "about-me" && (
+                    <div className="p-10 max-w-3xl mx-auto text-justify leading-relaxed">
+                        <h1 className="text-3xl font-bold text-center">About Me</h1>
+                        <p className="mt-6">I have travelled and lived far from my friends and family...</p>
+                        
+                        {/* ✅ Swiper Image Slider */}
+                        <div className="mt-6">
+                            <div className="swiper mySwiper">
+                                <div className="swiper-wrapper">
+                                    <div className="swiper-slide">
+                                        <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-full h-[400px] object-cover">
+                                            <source src="For Slide Education(Video).mp4" type="video/mp4" />
+                                        </video>
+                                    </div>
+                                    <div className="swiper-slide">
+                                        <img src="image2.jpg" alt="Image 2" className="rounded-lg shadow-lg w-full h-64 object-cover" />
+                                    </div>
+                                    <div className="swiper-slide">
+                                        <img src="image3.jpg" alt="Image 3" className="rounded-lg shadow-lg w-full h-64 object-cover" />
                                     </div>
                                 </div>
+
+                                {/* Navigation */}
+                                <div className="swiper-button-next"></div>
+                                <div className="swiper-button-prev"></div>
+                                <div className="swiper-pagination"></div>
                             </div>
-                        )}
-
-                        {/* ✅ About Me Section */}
-                        <section id="portfolio">
-                        <h1>My Portfolio</h1>
-            <div class="portfolio-container">
-                <div className="portfolio-item">
-    <img src="https://via.placeholder.com/300" alt="Project 1" />
-    <h3>Project 1</h3>
-    <p>A description of Project 1.</p>
-    <a href="#" target="_blank">View Project</a>
-</div>
-<div className="portfolio-item">
-    <img src="https://via.placeholder.com/300" alt="Project 2" />
-    <h3>Project 2</h3>
-    <p>A description of Project 2.</p>
-    <a href="#" target="_blank">View Project</a>
-</div>
-<div className="portfolio-item">
-    <img src="https://via.placeholder.com/300" alt="Project 3" />
-    <h3>Project 3</h3>
-    <p>A description of Project 3.</p>
-    <a href="#" target="_blank">View Project</a>
-</div>
-        </div>
-    </section>
-
-
-
-                        {/* ✅ Contact Section */}
-                        {activeSection === "contact" && (
-                            <div className="p-10 animate-fadeIn">
-                                <h1 className="text-3xl font-bold">Contact Me</h1>
-                                <p className="mt-4">Let’s Take Service to New Heights! ✈️</p>
-                                <ul className="mt-6 space-y-3 text-lg">
-                                    <li>📞 <a href="tel:+33 7 88 50 57 84" className="text-yellow-500 hover:underline">+33 7 88 50 57 84</a></li>
-                                    <li>📧 <a href="mailto:emily.bonnet2003@gmail.com" className="text-yellow-500 hover:underline">emily.bonnet2003@gmail.com</a></li>
-                                    <li>💼 <a href="https://linkedin.com/in/emily-bonnet-41829b331" target="_blank" className="text-yellow-500 hover:underline">LinkedIn Profile</a></li>
-                                </ul>
-                            </div>
-                        )}
+                        </div>
                     </div>
-                </div>
-            );
-        }
+                )}
 
-        // ✅ Render the React Component
-        ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
+                {/* ✅ Contact Section */}
+                {activeSection === "contact" && (
+                    <div className="p-10 animate-fadeIn">
+                        <h1 className="text-3xl font-bold">Contact Me</h1>
+                        <p className="mt-4">Let’s Take Service to New Heights! ✈️</p>
+                        <ul className="mt-6 space-y-3 text-lg">
+                            <li>📞 <a href="tel:+33 7 88 50 57 84" className="text-yellow-500 hover:underline">+33 7 88 50 57 84</a></li>
+                            <li>📧 <a href="mailto:emily.bonnet2003@gmail.com" className="text-yellow-500 hover:underline">emily.bonnet2003@gmail.com</a></li>
+                            <li>💼 <a href="https://linkedin.com/in/emily-bonnet-41829b331" target="_blank" className="text-yellow-500 hover:underline">LinkedIn Profile</a></li>
+                        </ul>
+                    </div>
+                )}
+            </div>
+
+            {/* ✅ Portfolio Section (Always Visible) */}
+            <section className="mt-20 px-10">
+                <h1 className="text-3xl font-bold text-center mb-8">My Portfolio</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[
+                        { id: 1, img: "https://via.placeholder.com/300", title: "Project 1", desc: "A description of Project 1" },
+                        { id: 2, img: "https://via.placeholder.com/300", title: "Project 2", desc: "A description of Project 2" },
+                        { id: 3, img: "https://via.placeholder.com/300", title: "Project 3", desc: "A description of Project 3" },
+                    ].map((project) => (
+                        <div key={project.id} className="bg-white p-6 rounded-lg shadow-lg">
+                            <img src={project.img} alt={project.title} className="w-full h-48 object-cover rounded-lg" />
+                            <h3 className="text-xl font-semibold mt-4">{project.title}</h3>
+                            <p className="text-gray-600 mt-2">{project.desc}</p>
+                            <a href="#" target="_blank" className="block mt-4 text-blue-500 hover:underline">View Project</a>
+                        </div>
+                    ))}
+                </div>
+
+                {/* ✅ "See More" Button */}
+                <div className="text-center mt-8">
+                    <a href="portfolio.html" className="bg-red-700 text-white px-6 py-3 rounded-lg hover:bg-red-800">
+                        See More Projects
+                    </a>
+                </div>
+            </section>
+        </div>
+    );
+}
+
+// ✅ Render the React Component
+ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
     </script>
 
     <!-- ✅ Swiper.js Script (after the React component) -->
