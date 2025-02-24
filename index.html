@@ -25,7 +25,7 @@
 function PortfolioWebsite() {
     const [activeSection, setActiveSection] = useState("home");
 
-   useEffect(() => {
+  useEffect(() => {
     if (activeSection === "about-me" && window.Swiper) {
         new Swiper(".mySwiper", {
             loop: true,
@@ -36,13 +36,14 @@ function PortfolioWebsite() {
             on: {
                 slideChange: function () {
                     const activeSlide = document.querySelector(".swiper-slide-active");
-                    const video = activeSlide?.querySelector("video");
+                    const video = activeSlide && activeSlide.querySelector("video"); // ✅ Fix here
                     if (video) { video.currentTime = 0; video.play(); }
                 }
             }
         });
     }
 }, [activeSection]);
+    
     return (
         <div className="min-h-screen bg-gray-100 text-gray-900">
             {/* ✅ Navigation Bar */}
