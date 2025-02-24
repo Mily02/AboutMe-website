@@ -36,7 +36,7 @@ function PortfolioWebsite() {
                 on: {
                     slideChange: function () {
                         const activeSlide = document.querySelector(".swiper-slide-active");
-                        const video = activeSlide?.querySelector("video");
+                        const video = activeSlide && activeSlide.querySelector("video");
                         if (video) { video.currentTime = 0; video.play(); }
                     }
                 }
