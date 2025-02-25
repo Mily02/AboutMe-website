@@ -28,29 +28,25 @@ function PortfolioWebsite() {
 
 useEffect(() => {
     if (activeSection === "about-me") {
-        import("https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js")
-            .then((module) => {
-                const Swiper = module.default; // Ensure Swiper is properly imported
-                new Swiper(".mySwiper", {
-                    loop: true,
-                    autoplay: { delay: 6000, disableOnInteraction: false },
-                    speed: 1000,
-                    pagination: { el: ".swiper-pagination", clickable: true },
-                    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                    on: {
-                        slideChangeTransitionEnd: function () {
-                            const activeSlide = document.querySelector(".swiper-slide-active");
-                            if (activeSlide) {
-                                const video = activeSlide.querySelector("video");
-                                if (video) {
-                                    video.play();
-                                }
-                            }
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 6000, disableOnInteraction: false },
+            speed: 1000,
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+            on: {
+                slideChangeTransitionEnd: function () {
+                    const activeSlide = document.querySelector(".swiper-slide-active");
+                    if (activeSlide) {
+                        const video = activeSlide.querySelector("video");
+                        if (video) {
+                            video.currentTime = 0; // Reset video to the start
+                            video.play();
                         }
                     }
-                });
-            })
-            .catch((error) => console.error("Failed to load Swiper:", error)); // Handle errors
+                }
+            }
+        });
     }
 }, [activeSection]);
     
