@@ -43,11 +43,13 @@ useEffect(() => {
                 },
                 slideChangeTransitionEnd: function () {
                     const activeSlide = document.querySelector(".swiper-slide-active");
-                    const video = activeSlide?.querySelector("video");
-                    if (video) {
-                        video.play();
-                    }
-                }
+if (activeSlide) { // Ensure activeSlide exists
+    const video = activeSlide.querySelector("video");
+    if (video) {
+        video.play();
+    }
+}
+
             }
         });
     }
