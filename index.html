@@ -27,31 +27,30 @@ function PortfolioWebsite() {
     const [activeSection, setActiveSection] = useState("home");
 
 useEffect(() => {
-    if (activeSection === "about-me" && window.Swiper) {
-        new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: { delay: 6000, disableOnInteraction: false },
-            speed: 1000,
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            on: {
-                slideChangeTransitionStart: function () {
-                    document.querySelectorAll(".swiper-slide video").forEach((video) => {
-                        video.pause();
-                        video.currentTime = 0;
-                    });
-                },
-                slideChangeTransitionEnd: function () {
-                    const activeSlide = document.querySelector(".swiper-slide-active");
-if (activeSlide) { // Ensure activeSlide exists
-    const video = activeSlide.querySelector("video");
-    if (video) {
-        video.play();
-    }
-}
-
-            }
-        });
+    if (activeSection === "about-me") {
+        import("https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js")
+            .then((module) => {
+                const Swiper = module.default; // Ensure Swiper is properly imported
+                new Swiper(".mySwiper", {
+                    loop: true,
+                    autoplay: { delay: 6000, disableOnInteraction: false },
+                    speed: 1000,
+                    pagination: { el: ".swiper-pagination", clickable: true },
+                    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                    on: {
+                        slideChangeTransitionEnd: function () {
+                            const activeSlide = document.querySelector(".swiper-slide-active");
+                            if (activeSlide) {
+                                const video = activeSlide.querySelector("video");
+                                if (video) {
+                                    video.play();
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch((error) => console.error("Failed to load Swiper:", error)); // Handle errors
     }
 }, [activeSection]);
     
