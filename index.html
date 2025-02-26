@@ -126,7 +126,9 @@ useEffect(() => {
                                     <div className="swiper-slide">
                                         <a href="projects.html" target="_blank"> {/* Link to projects page */}
                                         <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-full h-[400px] object-cover">
-                                      </a>
+        <source src="your-video.mp4" type="video/mp4" />
+    </video> {/* ✅ Properly closed <video> before closing <a> */}
+</a>
                                     </div>
                                 </div>
 
