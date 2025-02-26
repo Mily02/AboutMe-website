@@ -108,7 +108,7 @@
                     const page = await pdf.getPage(1);
                     const canvas = document.getElementById('pdf-render');
                     const ctx = canvas.getContext('2d');
-                    const viewport = page.getViewport({ scale: 1.5 });
+                    const viewport = page.getViewport({ scale: 1.2 });
 
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
@@ -120,9 +120,11 @@
             }, []);
 
             return (
-                <div className="mt-6">
-                    <canvas id="pdf-render" className="mx-auto shadow-lg"></canvas>
-                    <a href="CV.pdf" download className="mt-4 block text-blue-500 hover:underline">
+                <div className="mt-6 flex-col items-center">
+                     <div className="overflow-hidden border shadow-lg rounded-lg">
+                    <canvas id="pdf-render" style={{ maxWidth: "400px", maxHeight: "500px", width: "100%" }}></canvas>
+               </div>
+                 <a href="CV.pdf" download className="mt-4 block text-blue-500 hover:underline">
                         Download Resume
                     </a>
                 </div>
