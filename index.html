@@ -99,6 +99,8 @@
 
         // ✅ PDF Viewer Component
         function PDFViewer() {
+            const [scale, setScale] = React.useState(1.2);
+            
             useEffect(() => {
                 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
 
@@ -108,7 +110,7 @@
                     const page = await pdf.getPage(1);
                     const canvas = document.getElementById('pdf-render');
                     const ctx = canvas.getContext('2d');
-                    const viewport = page.getViewport({ scale: 1.2 });
+                    const viewport = page.getViewport({ scale });
 
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
@@ -117,13 +119,31 @@
                 };
 
                 renderPDF();
-            }, []);
+                }, [scale]);
 
             return (
                 <div className="mt-6 flex-col items-center">
+                    {/* PDF Canvas */}
                      <div className="overflow-hidden border shadow-lg rounded-lg">
                     <canvas id="pdf-render" style={{ maxWidth: "400px", maxHeight: "500px", width: "100%" }}></canvas>
                </div>
+                    
+                    {/* Zoom Controls */}
+                    <div className="mt-4 flex space-x-4">
+                <button
+                    onClick={() => setScale(scale + 0.2)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition"
+                >
+                    ➕ Zoom In
+                </button>
+                <button
+                    onClick={() => setScale(Math.max(0.6, scale - 0.2))}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 transition"
+                >
+                    ➖ Zoom Out
+                </button>
+            </div>
+                {/* Download Resume */}
                  <a href="CV.pdf" download className="mt-4 block text-blue-500 hover:underline">
                         Download Resume
                     </a>
