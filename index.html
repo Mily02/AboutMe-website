@@ -21,7 +21,7 @@
     <div id="root"></div> <!-- React will render inside this div -->
 
     <script type="text/babel">
-        const url = 'your-resume.pdf';
+        const url = 'CV.pdf';
 pdfjsLib.getDocument(url).promise.then(pdf => {
     pdf.getPage(1).then(page => {
         const canvas = document.getElementById('pdf-viewer');
