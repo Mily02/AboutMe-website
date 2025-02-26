@@ -115,17 +115,18 @@
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
 
-                    page.render({ canvasContext: ctx, viewport });
+                    const renderContext = { canvasContext: ctx, viewport };
+                    page.render(renderContext);
                 };
 
                 renderPDF();
                 }, [scale]);
 
             return (
-                <div className="mt-6 flex-col items-center">
+                <div className="flex flex-col items-center mt-6">
                     {/* PDF Canvas */}
-                     <div className="overflow-hidden border shadow-lg rounded-lg">
-                    <canvas id="pdf-render" style={{ maxWidth: "400px", maxHeight: "500px", width: "100%" }}></canvas>
+                     <div className="overflow-auto border shadow-lg rounded-lg max-w-full">
+                    <canvas id="pdf-render" className="w-full max-w-[600px]"></canvas>
                </div>
                     
                     {/* Zoom Controls */}
