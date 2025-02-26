@@ -63,28 +63,27 @@
     <div id="root"></div> <!-- React will render inside this div -->
 
     <script type="text/babel">
-<!-- PDF.js Library -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const url = 'CV.pdf'; // Path to your resume file
+const renderPDF = async () => {
+    const url = 'your-resume.pdf'; // ✅ Define only once
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    const page = await pdf.getPage(1);
 
-    const renderPDF = async () => {
-        const pdf = await pdfjsLib.getDocument(url).promise;
-        const page = await pdf.getPage(1);
+    const canvas = document.getElementById('pdf-render');
+    const ctx = canvas.getContext('2d');
+    const viewport = page.getViewport({ scale: 1.5 });
 
-        const canvas = document.getElementById('pdf-render');
-        if (!canvas) return; // Prevents errors if element is missing
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
 
-        const ctx = canvas.getContext('2d');
-        const viewport = page.getViewport({ scale: 1.5 });
+    const renderContext = { canvasContext: ctx, viewport: viewport };
+    page.render(renderContext);
+};
 
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-
-        const renderContext = { canvasContext: ctx, viewport: viewport };
-        await page.render(renderContext);
-    };
+// Call function after DOM loads
+document.addEventListener("DOMContentLoaded", renderPDF);
 
     renderPDF();
 });
