@@ -21,6 +21,20 @@
     <div id="root"></div> <!-- React will render inside this div -->
 
     <script type="text/babel">
+        const url = 'your-resume.pdf';
+pdfjsLib.getDocument(url).promise.then(pdf => {
+    pdf.getPage(1).then(page => {
+        const canvas = document.getElementById('pdf-viewer');
+        const ctx = canvas.getContext('2d');
+        const viewport = page.getViewport({ scale: 1.5 });
+
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = { canvasContext: ctx, viewport: viewport };
+        page.render(renderContext);
+    });
+});
         const { useState, useEffect } = React;
 
 function PortfolioWebsite() {
@@ -87,6 +101,9 @@ useEffect(() => {
                                 <p className="mt-4">I thrive in fast-paced environments, especially during peak seasons.</p>
                                 <p className="mt-4">I am always seeking opportunities to grow and refine my skills.</p>
                                 <p className="mt-4">I look forward to bringing my dedication and enthusiasm.</p>
+                    </div>
+            <canvas id="pdf-viewer"></canvas>
+            <a href="CV.pdf" download class="download-btn">Download Resume</a>
                     </div>
                 )}
 
@@ -193,7 +210,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />
 
     <!-- ✅ Swiper.js Script (after the React component) -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+    
     <footer class="text-center py-4 text-gray-700">
         &copy; 2025 Emily Bonnet. All rights reserved.
     </footer>
