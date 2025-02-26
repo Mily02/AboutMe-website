@@ -67,7 +67,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
 <script>
 const renderPDF = async () => {
-    const url = 'your-resume.pdf'; // ✅ Define only once
+    const url = 'CV.pdf'; // ✅ Define only once
     const pdf = await pdfjsLib.getDocument(url).promise;
     const page = await pdf.getPage(1);
 
@@ -85,7 +85,6 @@ const renderPDF = async () => {
 // Call function after DOM loads
 document.addEventListener("DOMContentLoaded", renderPDF);
 
-    renderPDF();
 });
     
         const { useState, useEffect } = React;
