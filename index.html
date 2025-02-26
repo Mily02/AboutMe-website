@@ -30,6 +30,8 @@
         function PortfolioWebsite() {
             const [activeSection, setActiveSection] = useState("Home");
 
+            ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
+
             // ✅ Initialize Swiper when "About Me" section is active
             useEffect(() => {
                 if (activeSection === "About-me") {
