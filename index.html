@@ -227,6 +227,15 @@
                 </div>
             );
         }
+        <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sectionToScroll = sessionStorage.getItem("scrollToSection");
+        if (sectionToScroll) {
+            document.getElementById(sectionToScroll)?.scrollIntoView({ behavior: "smooth" });
+            sessionStorage.removeItem("scrollToSection");
+        }
+    });
+</script>
 
         // ✅ Render React Component
         ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
