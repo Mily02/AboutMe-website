@@ -22,15 +22,15 @@
     <!-- ✅ Navbar -->
     <nav class="bg-gray-900 text-white py-4 shadow-md">
         <div class="container mx-auto text-center">
-           <a href="index.html" onclick="goBackToAboutMe(event)" class="text-lg font-semibold hover:underline">
-    ← Back to About Me
+           <a href="index.html" onclick="goToAboutMe(event)" class="text-blue-500 hover:underline">
+    Go Back to About Me
 </a>
 
 <script>
-    function goBackToAboutMe(event) {
-        event.preventDefault(); // Prevents full reload
-        sessionStorage.setItem("scrollToSection", "About-me"); 
-        window.location.href = "index.html"; // Navigate back
+    function goToAboutMe(event) {
+        event.preventDefault();
+        sessionStorage.setItem("scrollToSection", "About-me"); // ✅ Ensure the ID is correct
+        window.location.href = "index.html";
     }
 </script>
         </div>
