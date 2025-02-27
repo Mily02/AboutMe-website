@@ -27,10 +27,15 @@
 </a>
 
 <script>
-    function goBackToAboutMe(event) {
-        event.preventDefault(); // Prevents full reload
-        sessionStorage.setItem("scrollToSection", "About-me"); 
-        window.location.href = "index.html"; // Navigate back
+    function goBackToAboutMe() {
+         if (document.referrer.includes("index.html")) {
+            // If coming from index.html, go back to About Me
+            sessionStorage.setItem("scrollToSection", "About-me");
+            window.location.href = "index.html";
+        } else {
+            // Otherwise, just go back to the previous page
+            window.history.back();
+        }
     }
 </script>
         </div>
