@@ -29,6 +29,14 @@
 
         function PortfolioWebsite() {
             const [activeSection, setActiveSection] = useState("Home");
+            useEffect(() => {
+    const handleNavigation = (event) => {
+        setActiveSection(event.detail);
+    };
+
+    window.addEventListener("navigate", handleNavigation);
+    return () => window.removeEventListener("navigate", handleNavigation);
+}, []);
 
             // ✅ Initialize Swiper when "About Me" section is active
             useEffect(() => {
@@ -238,11 +246,14 @@
         document.addEventListener("DOMContentLoaded", function () {
             const sectionToScroll = sessionStorage.getItem("scrollToSection");
             if (sectionToScroll) {
-                document.getElementById(sectionToScroll)?.scrollIntoView({ behavior: "smooth" });
                 sessionStorage.removeItem("scrollToSection");
-            }
-        });
-    </script>
+
+            // ✅ Use React State to Change Section
+            const event = new CustomEvent("navigate", { detail: sectionToScroll });
+            window.dispatchEvent(event);
+        }
+    });
+</script>
 
     <footer class="text-center py-4 text-gray-700">
         &copy; 2025 Emily Bonnet. All rights reserved.
