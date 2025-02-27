@@ -245,12 +245,11 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const sectionToScroll = sessionStorage.getItem("scrollToSection");
-            if (sectionToScroll) {
-                sessionStorage.removeItem("scrollToSection");
-
-            // ✅ Use React State to Change Section
-            const event = new CustomEvent("navigate", { detail: sectionToScroll });
-            window.dispatchEvent(event);
+           if (sectionToScroll) {
+            setTimeout(() => {
+                document.getElementById(sectionToScroll)?.scrollIntoView({ behavior: "smooth" });
+            }, 500);
+            sessionStorage.removeItem("scrollToSection");
         }
     });
 </script>
