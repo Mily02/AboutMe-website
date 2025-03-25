@@ -150,62 +150,7 @@
             );
         }
 
-        // ✅ About Me Section
-        function AboutMe() {
-            return (
-                <div id="About-me" className="p-10">
-                    <h1 className="text-3xl font-bold">About Me</h1>
-                    <p className="mt-4">Adaptable, Globally-Minded, and Resilient.</p>
-                     <p className="mt-4">Having lived and traveled far from my family and friends, I have developed a strong sense of independence, adaptability, and cultural awareness. Immersing myself in new environments has strengthened my ability to connect with diverse people, quickly adapt to change, and stay composed in unfamiliar situations.</p>
-                    <p className="mt-4">These experiences have shaped me into a resilient, open-minded, and resourceful professional, always ready to take on new challenges with confidence and a positive attitude.</p>
-                
-
-
-                    {/* ✅ Swiper Carousel */}
-                        <div className="mt-6">
-                            <div className="swiper mySwiper">
-                                <div className="swiper-wrapper">
-                                    <div className="swiper-slide relative flex justify-center items-center">
-                                        <a href="education.html" className="block relative"> {/* Link to another page */}
-                                        <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-auto h-automax-w-full max-h-[80vh] object-contain">
-                                            <source src="For Slide Education(Video).mp4" type="video/mp4" />
-                                        </video>
-                                             <div className="absolute bottom-4 right-4 bg-white bg-opacity-80 text-gray-800 text-sm font-medium px-3 py-1 rounded-lg shadow-md hover:bg-opacity-100 transition">
-                                            Find out more →
-                                            </div>
-                                     </a>
-                                    </div>
-                                    <div className="swiper-slide relative flex justify-center items-center">
-                                        <a href="experience.html" className="block relative"> {/* Link to experience page */}
-                                         <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-auto h-auto max-w-[80vw] max-h-[80vh] object-contain">
-                                            <source src="For Slide Profesional(Video).mp4" type="video/mp4" />
-                                        </video>
-                                            <div className="absolute bottom-4 right-4 bg-white bg-opacity-80 text-gray-800 text-sm font-medium px-3 py-1 rounded-lg shadow-md hover:bg-opacity-100 transition">
-                                            See my experience →
-                                            </div>
-                                        </a>
-                                         </div>
-                                    <div className="swiper-slide relative flex justify-center items-center">
-                                        <a href="passion.html" className="block relative"> {/* Link to projects page */}
-                                        <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-auto h-auto max-w-[80vw] max-h-[80vh] object-contain">
-                                            <source src="your-video.mp4" type="video/mp4" />
-                                        </video> {/* ✅ Properly closed <video> before closing <a> */}
-                                    <div className="absolute bottom-4 right-4 bg-white bg-opacity-80 text-gray-800 text-sm font-medium px-3 py-1 rounded-lg shadow-md hover:bg-opacity-100 transition">
-                                            See more →
-                                    </div>
-                                  </a>
-                                </div>
-                            </div>
-
-                                {/* Navigation */}
-                                <div className="swiper-button-next"></div>
-                                <div className="swiper-button-prev"></div>
-                                <div className="swiper-pagination"></div>
-                            </div>
-                        </div>
-                     </div>
-                );
-            }
+       
 
         // ✅ Portfolio Section
         function Portfolio() {
