@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emily Bonnet - Portfolio</title>
+
+    <!-- ✅ React & Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- ✅ Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ✅ Swiper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- ✅ PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div id="root"></div> <!-- React will render inside this div -->
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function PortfolioWebsite() {
+            const [activeSection, setActiveSection] = useState("Home");
+            useEffect(() => {
+    const handleNavigation = (event) => {
+        setActiveSection(event.detail);
+    };
+
+    window.addEventListener("navigate", handleNavigation);
+    return () => window.removeEventListener("navigate", handleNavigation);
+}, []);
+
+            // ✅ Initialize Swiper when "About Me" section is active
+            useEffect(() => {
+                if (activeSection === "About-me") {
+                    const swiper = new Swiper(".mySwiper", {
+                        loop: true,
+                        autoplay: { delay: 6000, disableOnInteraction: false },
+                        speed: 1000,
+                        pagination: { el: ".swiper-pagination", clickable: true },
+                        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                        on: {
+                            slideChangeTransitionEnd: function () {
+                                const activeSlide = document.querySelector(".swiper-slide-active");
+                                if (activeSlide) {
+                                    const video = activeSlide.querySelector("video");
+                                    if (video) {
+                                        video.currentTime = 0;
+                                        video.play();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }, [activeSection]);
+
+            return (
+                <div className="min-h-screen bg-gray-100 text-gray-900">
+                    {/* ✅ Navigation Bar */}
+                    <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg">
+                        <div className="flex justify-center space-x-6">
+                            {["Home", "About-me", "Portfolio", "Contact"].map((section) => (
+                                <button
+                                    key={section}
+                                    onClick={() => setActiveSection(section)}
+                                    className={`px-4 py-2 transition-all duration-300 rounded-md ${
+                                        activeSection === section ? "bg-red-700" : "hover:bg-gray-700"
+                                    }`}
+                                >
+                                    {section.replace("-", " ")}
+                                </button>
+                            ))}
+                        </div>
+                    </nav>
+
+                    {/* ✅ Sections */}
+                    <div className="pt-20 text-center">
+                        {activeSection === "Home" && <Home />}
+                        {activeSection === "About-me" && <AboutMe />}
+                        {activeSection === "Portfolio" && <Portfolio />}
+                        {activeSection === "Contact" && <Contact />}
+                    </div>
+                </div>
+            );
+        }
+ // ✅ About Me Section
+        function AboutMe() {
+            return (
+                <div id="About-me" className="p-10">
+                    <h1 className="text-3xl font-bold">About Me</h1>
+                    <p className="mt-4">Adaptable, Globally-Minded, and Resilient.</p>
+                     <p className="mt-4">Having lived and traveled far from my family and friends, I have developed a strong sense of independence, adaptability, and cultural awareness. Immersing myself in new environments has strengthened my ability to connect with diverse people, quickly adapt to change, and stay composed in unfamiliar situations.</p>
+                    <p className="mt-4">These experiences have shaped me into a resilient, open-minded, and resourceful professional, always ready to take on new challenges with confidence and a positive attitude.</p>
+                
+
+
+                    {/* ✅ Swiper Carousel */}
+                        <div className="mt-6">
+                            <div className="swiper mySwiper">
+                                <div className="swiper-wrapper">
+                                    <div className="swiper-slide relative flex justify-center items-center">
+                                        <a href="education.html" className="block relative"> {/* Link to another page */}
+                                        <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-auto h-automax-w-full max-h-[80vh] object-contain">
+                                            <source src="For Slide Education(Video).mp4" type="video/mp4" />
+                                        </video>
+                                             <div className="absolute bottom-4 right-4 bg-white bg-opacity-80 text-gray-800 text-sm font-medium px-3 py-1 rounded-lg shadow-md hover:bg-opacity-100 transition">
+                                            Find out more →
+                                            </div>
+                                     </a>
+                                    </div>
+                                    <div className="swiper-slide relative flex justify-center items-center">
+                                        <a href="experience.html" className="block relative"> {/* Link to experience page */}
+                                         <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-auto h-auto max-w-[80vw] max-h-[80vh] object-contain">
+                                            <source src="For Slide Profesional(Video).mp4" type="video/mp4" />
+                                        </video>
+                                            <div className="absolute bottom-4 right-4 bg-white bg-opacity-80 text-gray-800 text-sm font-medium px-3 py-1 rounded-lg shadow-md hover:bg-opacity-100 transition">
+                                            See my experience →
+                                            </div>
+                                        </a>
+                                         </div>
+                                    <div className="swiper-slide relative flex justify-center items-center">
+                                        <a href="passion.html" className="block relative"> {/* Link to projects page */}
+                                        <video autoPlay muted loop playsInline className="rounded-lg shadow-lg w-auto h-auto max-w-[80vw] max-h-[80vh] object-contain">
+                                            <source src="your-video.mp4" type="video/mp4" />
+                                        </video> {/* ✅ Properly closed <video> before closing <a> */}
+                                    <div className="absolute bottom-4 right-4 bg-white bg-opacity-80 text-gray-800 text-sm font-medium px-3 py-1 rounded-lg shadow-md hover:bg-opacity-100 transition">
+                                            See more →
+                                    </div>
+                                  </a>
+                                </div>
+                            </div>
+
+                                {/* Navigation */}
+                                <div className="swiper-button-next"></div>
+                                <div className="swiper-button-prev"></div>
+                                <div className="swiper-pagination"></div>
+                            </div>
+                        </div>
+                     </div>
+                );
+            }
+ // ✅ Render React Component
+        ReactDOM.createRoot(document.getElementById("root")).render(<PortfolioWebsite />);
+    </script>
+
+    <footer class="text-center py-4 text-gray-700">
+        &copy; 2025 Emily Bonnet. All rights reserved.
+    </footer>
+</body>
+</html>
