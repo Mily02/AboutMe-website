@@ -28,7 +28,7 @@
         const { useState, useEffect } = React;
 
         function PortfolioWebsite() {
-            const [activeSection, setActiveSection] = useState("Home");
+            const [activeSection, setActiveSection] = useState("About-me");
             useEffect(() => {
     const handleNavigation = (event) => {
         setActiveSection(event.detail);
@@ -69,16 +69,24 @@
                     <nav className="fixed top-0 w-full bg-gray-900 text-white py-4 shadow-lg">
                         <div className="flex justify-center space-x-6">
                             {["Home", "About-me", "Portfolio", "Contact"].map((section) => (
-                                <button
-                                    key={section}
-                                    onClick={() => setActiveSection(section)}
-                                    className={`px-4 py-2 transition-all duration-300 rounded-md ${
-                                        activeSection === section ? "bg-red-700" : "hover:bg-gray-700"
-                                    }`}
-                                >
-                                    {section.replace("-", " ")}
-                                </button>
-                            ))}
+            
+    <a
+        key={section}
+        href={section === "About-me" ? "about_me.html" : "#"}
+        onClick={(e) => {
+            if (section !== "About-me") {
+                e.preventDefault();
+                setActiveSection(section);
+            }
+        }}
+        className={`px-4 py-2 transition-all duration-300 rounded-md ${
+            activeSection === section ? "bg-red-700" : "hover:bg-gray-700"
+        }`}
+    >
+        {section.replace("-", " ")}
+    </a>
+))}
+                          
                         </div>
                     </nav>
 
